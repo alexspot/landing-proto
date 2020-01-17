@@ -3,9 +3,11 @@ import { Component, OnInit, ViewChild, OnDestroy } from '@angular/core';
 import * as fromOrder from '../../order/store/order.reducer';
 import { Store } from '@ngrx/store';
 import { Order } from '../order.model'
-import { NgForm } from '@angular/forms';
+import { NgForm, FormGroup, FormControl } from '@angular/forms';
+import { map } from 'rxjs/operators';
 import { Subscription } from 'rxjs';
 import * as OrderActions from '../store/order.actions';
+import { Router, ActivatedRoute, Params } from '@angular/router';
 
 
 @Component({
@@ -17,41 +19,78 @@ export class OrderEditComponent implements OnInit, OnDestroy {
 
   editMode = false;
   editedItem: Order;
-  @ViewChild('orderForm', {static: false}) orderForm: NgForm;
+  id: number;
+  // write logic to get index from url
   subscription: Subscription;
 
-  // orderForm = new FormGroup({
-  //   firstName: new FormControl('Иван'),
-  //   lastName: new FormControl('Иванов'),
-  //   phoneNumber: new FormControl('+380731234567'),
-  //   city: new FormControl('Чернигов'),
-  //   npAffiliate: new FormControl('Склад №2')
-  // })
+  orderForm = new FormGroup({
+    firstName: new FormControl(''),
+    lastName: new FormControl(''),
+    phoneNumber: new FormControl(''),
+    city: new FormControl(''),
+    npAffiliate: new FormControl('')
+  })
 
-  constructor(private store: Store<fromOrder.AppState> ) { }
+  constructor(private store: Store<fromOrder.AppState>, private router: Router, private route: ActivatedRoute ) { }
 
   ngOnInit() {
-    this.subscription = this.store.select('order').subscribe(stateData => {
-      if (stateData.editedOrderIndex > -1) {
-        this.editMode = true;
-        this.editedItem = stateData.editedOrder;
-        this.orderForm.setValue({
-          firstName: this.editedItem.firstName,
-          lastName: this.editedItem.lastName,
-          phoneNumber: this.editedItem.phoneNumber,
-          city: this.editedItem.city,
-          npAffiliate: this.editedItem.npAffiliate
-        })
-
-      } else {
-        this.editMode = false;
-      }
+    this.route.params.subscribe((params: Params) => {
+      this.id = +params['id'];
+      this.editMode = params['id'] != null;
     });
+
+    this.subscription = this.store.select('order').pipe(map(orderState => {
+      return orderState.orderList.find((recipe, index) => {
+        return index == this.id;
+      })
+    })).subscribe(order => {
+      this.orderForm.setValue({
+        firstName: order.firstName,
+        lastName: order.lastName,
+        phoneNumber: order.phoneNumber,
+        city: order.city,
+        npAffiliate: order.city
+      })
+
+    });
+    // this.subscription = this.store.select('order').pipe(map(stateData => {
+    //   console.log(stateData);
+    //   if (stateData.editedOrderIndex > -1) {
+    //     console.log('i am in editing mode')
+    //     this.editMode = true;
+    //     this.editedItem = stateData.editedOrder;
+    //     this.orderForm.setValue({
+    //       firstName: this.editedItem.firstName,
+    //       lastName: this.editedItem.lastName,
+    //       phoneNumber: this.editedItem.phoneNumber,
+    //       city: this.editedItem.city,
+    //       npAffiliate: this.editedItem.npAffiliate
+    //     })
+    //   } else {
+    //     this.editMode = false;
+    //   }
+    // });
   }
 
   ngOnDestroy(){
-    this.subscription.unsubscribe();
-    this.store.dispatch(new OrderActions.stopEdit());
+    // this.subscription.unsubscribe();
+    // this.store.dispatch(new OrderActions.stopEdit());
   }
 
+  onSubmit() {
+
+    const value = this.orderForm.value;
+    const newOrder = new Order(
+      value.firstName,
+      value.lastName,
+      value.phoneNumber,
+      value.city,
+      value.npAffiliate,
+      'new'
+    )
+
+    if (this.editMode) {
+      this.store.dispatch(new OrderActions.updateOrder({index: this.id, order: newOrder}));
+    }
+  }
 }

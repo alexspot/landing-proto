@@ -2,9 +2,8 @@ import * as OrderActions from './order.actions';
 import { Order } from '../order.model'
 
 export interface State {
-  orderList: Order[],
-  editedOrder: Order,
-  editedOrderIndex: number;
+  orderList: Order[]
+
 }
 
 export interface AppState {
@@ -15,12 +14,8 @@ const initialState: State = {
   orderList: [
     new Order('Alex', 'Petrov', '38073012345', 'Kyiv', '#33', 'New'),
     new Order('Anna', 'Maylath', '38073543211', 'Lviv', '#32', 'Pending confirmation')
-  ],
-  editedOrder: null,
-  editedOrderIndex: -1
+  ]
 };
-
-// for initial state we need to get orders from DB
 
 export function orderReducer(state: State = initialState, action: OrderActions.OrderActions) {
   switch (action.type) {
@@ -52,21 +47,21 @@ export function orderReducer(state: State = initialState, action: OrderActions.O
           })
         }
 
-      case OrderActions.START_EDIT:
-        return {
-          ...state,
-          editedOrder: {...state.orderList[action.payload],
-          editedOrderIndex: action.payload}
+      // case OrderActions.START_EDIT:
+      //   return {
+      //     ...state,
+      //     editedOrder: {...state.orderList[action.payload],
+      //     editedOrderIndex: action.payload}
 
-        };
+      //   };
 
-      case OrderActions.STOP_EDIT:    
-        return {
-          ...state,
-          editedOrder: null,
-          editedOrderIndex: null
+      // case OrderActions.STOP_EDIT:    
+      //   return {
+      //     ...state,
+      //     editedOrder: null,
+      //     editedOrderIndex: null
 
-        };
+      //   };
       default: return state;
   }
 }

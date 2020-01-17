@@ -1,3 +1,8 @@
 <p
-  *ngFor="let order of (orderList | async).orderList">
-  {{order.firstName}}</p>
+  *ngFor="let order of (orderList | async).orderList; let i = index">
+  {{order.firstName}}
+  <button 
+    class="btn btn-primary"
+    (click)="onUpdateClick(i)"
+    routerLink="/order/{{i}}/edit">edit</button>
+</p>

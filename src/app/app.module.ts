@@ -16,37 +16,21 @@ import { StoreModule } from '@ngrx/store';
 import { orderReducer } from './order/store/order.reducer';
 import { OrderEditComponent } from './order/order-edit/order-edit.component';
 import { OrderListComponent } from './order/order-list/order-list.component';
+import { OrderCreateComponent } from './order/order-create/order-create.component';
 
 
 const appRoutes: Routes = [
   { path: '',                 component: MainPageComponent},
   { path: 'order',            component: OrderComponent, 
     children: [
-      { path: ':id/edit',       component: OrderEditComponent },
-      { path: 'all',            component: OrderListComponent },
+      { path: 'create',       component: OrderCreateComponent },
+      { path: ':id/edit',     component: OrderEditComponent },
+      { path: 'all',          component: OrderListComponent },
     ] 
   },
   { path: 'admin',            component: AdminComponent },
   { path: 'thank-you',        component: ThankYouPageComponent}
 ]
-
-// path: 'recipes',
-// component: RecipesComponent,
-// children: [
-//   { path: '', component: RecipeStartComponent },
-//   { path: 'new', component: RecipeEditComponent },
-//   {
-//     path: ':id',
-//     component: RecipeDetailComponent,
-//     resolve: [RecipesResolverService]
-//   },
-//   {
-//     path: ':id/edit',
-//     component: RecipeEditComponent,
-//     resolve: [RecipesResolverService]
-//   }
-// ]
-// },
 
 @NgModule({
   declarations: [
@@ -56,7 +40,8 @@ const appRoutes: Routes = [
     ThankYouPageComponent,
     MainPageComponent,
     OrderEditComponent,
-    OrderListComponent
+    OrderListComponent,
+    OrderCreateComponent
   ],
   imports: [
     BrowserModule,

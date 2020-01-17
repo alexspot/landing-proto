@@ -6,6 +6,7 @@ import { Observable } from 'rxjs';
 
 import * as orderActions from '../../order/store/order.actions';
 import * as fromOrder from '../../order/store/order.reducer';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-order-list',
@@ -19,8 +20,8 @@ export class OrderListComponent implements OnInit {
   orderList: Observable<{orderList: Order[]}>;
 
   constructor(
-    private store: Store<fromOrder.AppState>) { }
-
+    private store: Store<fromOrder.AppState>)
+    {}
 
   ngOnInit() {
     // this.orderList = this.dsStorage.orderList;
@@ -31,8 +32,8 @@ export class OrderListComponent implements OnInit {
     this.store.dispatch(new orderActions.startEdit(index));
   }
 
-  onDeleteClick(index: number) {
-    this.store.dispatch(new orderActions.deleteOrder(index));
+  onDeleteClick() {
+    this.store.dispatch(new orderActions.deleteOrder(1));
   }
 
 }

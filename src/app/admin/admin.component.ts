@@ -29,12 +29,4 @@ export class AdminComponent implements OnInit {
     this.orderList = this.store.select('order');
   }
 
-  onUpdateClick(index: number) {
-    this.store.dispatch(new orderActions.startEdit(index));
-  }
-
-  onDeleteClick(index: number) {
-    this.store.dispatch(new orderActions.deleteOrder(index));
-  }
-
 }
