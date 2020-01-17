@@ -6,5 +6,11 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
+  // TelegramBot = require('node-telegram-bot-api');
   title = 'landingPrototype';
+
+  onCreateOrderClick() {
+
+  }
+
 }
