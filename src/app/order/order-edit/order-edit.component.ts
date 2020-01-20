@@ -49,36 +49,17 @@ export class OrderEditComponent implements OnInit, OnDestroy {
         lastName: order.lastName,
         phoneNumber: order.phoneNumber,
         city: order.city,
-        npAffiliate: order.city
+        npAffiliate: order.npAffiliate
       })
 
     });
-    // this.subscription = this.store.select('order').pipe(map(stateData => {
-    //   console.log(stateData);
-    //   if (stateData.editedOrderIndex > -1) {
-    //     console.log('i am in editing mode')
-    //     this.editMode = true;
-    //     this.editedItem = stateData.editedOrder;
-    //     this.orderForm.setValue({
-    //       firstName: this.editedItem.firstName,
-    //       lastName: this.editedItem.lastName,
-    //       phoneNumber: this.editedItem.phoneNumber,
-    //       city: this.editedItem.city,
-    //       npAffiliate: this.editedItem.npAffiliate
-    //     })
-    //   } else {
-    //     this.editMode = false;
-    //   }
-    // });
   }
 
   ngOnDestroy(){
-    // this.subscription.unsubscribe();
-    // this.store.dispatch(new OrderActions.stopEdit());
+    this.subscription.unsubscribe();
   }
 
   onSubmit() {
-
     const value = this.orderForm.value;
     const newOrder = new Order(
       value.firstName,

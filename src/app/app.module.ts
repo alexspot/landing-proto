@@ -17,6 +17,7 @@ import { orderReducer } from './order/store/order.reducer';
 import { OrderEditComponent } from './order/order-edit/order-edit.component';
 import { OrderListComponent } from './order/order-list/order-list.component';
 import { OrderCreateComponent } from './order/order-create/order-create.component';
+import { AuthComponent } from './auth/auth.component';
 
 
 const appRoutes: Routes = [
@@ -41,7 +42,8 @@ const appRoutes: Routes = [
     MainPageComponent,
     OrderEditComponent,
     OrderListComponent,
-    OrderCreateComponent
+    OrderCreateComponent,
+    AuthComponent
   ],
   imports: [
     BrowserModule,
