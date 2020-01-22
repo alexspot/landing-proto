@@ -1,13 +1,14 @@
 import { Component, OnInit, ViewChild, OnDestroy } from '@angular/core';
 
-import * as fromOrder from '../../order/store/order.reducer';
 import { Store } from '@ngrx/store';
 import { Order } from '../order.model'
-import { NgForm, FormGroup, FormControl } from '@angular/forms';
+import { FormGroup, FormControl } from '@angular/forms';
 import { map } from 'rxjs/operators';
 import { Subscription } from 'rxjs';
-import * as OrderActions from '../store/order.actions';
 import { Router, ActivatedRoute, Params } from '@angular/router';
+
+import * as OrderActions from '../store/order.actions';
+import * as fromApp from '../../store/app.reducer';
 
 
 @Component({
@@ -31,7 +32,7 @@ export class OrderEditComponent implements OnInit, OnDestroy {
     npAffiliate: new FormControl('')
   })
 
-  constructor(private store: Store<fromOrder.AppState>, private router: Router, private route: ActivatedRoute ) { }
+  constructor(private store: Store<fromApp.AppState>, private router: Router, private route: ActivatedRoute ) { }
 
   ngOnInit() {
     this.route.params.subscribe((params: Params) => {

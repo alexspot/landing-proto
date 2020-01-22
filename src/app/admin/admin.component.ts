@@ -19,14 +19,12 @@ export class AdminComponent implements OnInit {
 
   orderList: Observable<{orderList: Order[]}>;
 
-  constructor(
-    private dsStorage: DataStorageService,
-    private store: Store<fromOrder.AppState>) { }
+  constructor() { }
 
 
   ngOnInit() {
     // this.orderList = this.dsStorage.orderList;
-    this.orderList = this.store.select('order');
+    // this.orderList = this.store.select('order');
   }
 
 }

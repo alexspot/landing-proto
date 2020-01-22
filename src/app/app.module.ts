@@ -10,14 +10,20 @@ import { DataStorageService } from './data-storage.service';
 import { ThankYouPageComponent } from './thank-you-page/thank-you-page.component';
 import { MainPageComponent } from './main-page/main-page.component';
 import { CountdownModule } from 'ngx-countdown';
+import { HttpClientModule } from '@angular/common/http';
 
 
 import { StoreModule } from '@ngrx/store';
-import { orderReducer } from './order/store/order.reducer';
 import { OrderEditComponent } from './order/order-edit/order-edit.component';
 import { OrderListComponent } from './order/order-list/order-list.component';
 import { OrderCreateComponent } from './order/order-create/order-create.component';
 import { AuthComponent } from './auth/auth.component';
+import { AuthenticationService } from './authentication.service';
+
+import * as fromApp from './store/app.reducer';
+import { AuthGuard } from './auth/auth.guard';
+import { EffectsModule } from '@ngrx/effects';
+import { AuthEffects } from './auth/store/auth.effects';
 
 
 const appRoutes: Routes = [
@@ -25,12 +31,15 @@ const appRoutes: Routes = [
   { path: 'order',            component: OrderComponent, 
     children: [
       { path: 'create',       component: OrderCreateComponent },
+      // { path: ':id/edit',     component: OrderEditComponent, canActivate: [AuthGuard] },
       { path: ':id/edit',     component: OrderEditComponent },
+      // { path: 'all',          component: OrderListComponent, canActivate: [AuthGuard] },
       { path: 'all',          component: OrderListComponent },
     ] 
   },
   { path: 'admin',            component: AdminComponent },
-  { path: 'thank-you',        component: ThankYouPageComponent}
+  { path: 'thank-you',        component: ThankYouPageComponent},
+  { path: 'login',            component: AuthComponent}
 ]
 
 @NgModule({
@@ -50,10 +59,13 @@ const appRoutes: Routes = [
     ReactiveFormsModule,
     RouterModule.forRoot(appRoutes),
     CountdownModule,
-    StoreModule.forRoot({order: orderReducer})
+    StoreModule.forRoot(fromApp.appReducer),
+    EffectsModule.forRoot([AuthEffects]),
+    HttpClientModule
   ],
   providers: [
-    DataStorageService
+    DataStorageService,
+    AuthenticationService
   ],
   bootstrap: [AppComponent]
 })

@@ -3,11 +3,6 @@ import { Order } from '../order.model'
 
 export interface State {
   orderList: Order[]
-
-}
-
-export interface AppState {
-  order: State;
 }
 
 const initialState: State = {

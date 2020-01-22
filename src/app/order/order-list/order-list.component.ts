@@ -5,8 +5,8 @@ import { Observable } from 'rxjs';
 
 
 import * as orderActions from '../../order/store/order.actions';
-import * as fromOrder from '../../order/store/order.reducer';
-import { Router } from '@angular/router';
+import * as fromApp from '../../store/app.reducer';
+
 
 @Component({
   selector: 'app-order-list',
@@ -20,7 +20,7 @@ export class OrderListComponent implements OnInit {
   orderList: Observable<{orderList: Order[]}>;
 
   constructor(
-    private store: Store<fromOrder.AppState>)
+    private store: Store<fromApp.AppState>)
     {}
 
   ngOnInit() {
@@ -29,7 +29,7 @@ export class OrderListComponent implements OnInit {
   }
 
   onUpdateClick(index: number) {
-    this.store.dispatch(new orderActions.startEdit(index));
+    // this.store.dispatch(new orderActions.startEdit(index));
   }
 
   onDeleteClick() {
