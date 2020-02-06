@@ -1,7 +1,5 @@
 import { Component, OnInit, ViewChild, OnDestroy } from '@angular/core';
-
 import { Store } from '@ngrx/store';
-import { Order } from '../order.model'
 import { FormGroup, FormControl, FormArray } from '@angular/forms';
 import { map } from 'rxjs/operators';
 import { Subscription } from 'rxjs';
@@ -11,6 +9,8 @@ import * as OrderActions from '../store/order.actions';
 import * as ProductActions from '../../products/store/product.actions';
 import * as fromApp from '../../store/app.reducer';
 import { Product } from 'src/app/products/product.model';
+import { Color } from 'src/app/shared/models/color.model';
+import { Order } from '../order.model'
 
 @Component({
   selector: 'app-order-edit',
@@ -28,7 +28,7 @@ export class OrderEditComponent implements OnInit, OnDestroy {
   productSubscription: Subscription;
   productSelectSubscription: Subscription;
 
-  productColors: string[];
+  productColors: Color[];
   product: Product; 
   productList: Product[];
   selectedProduct: Product;

@@ -1,4 +1,5 @@
 import { Product } from '../products/product.model';
+import { Color } from '../shared/models/color.model';
 
 export class Order {
   constructor(
@@ -9,7 +10,7 @@ export class Order {
     public npAffiliate: string,
     public status: string,
     public product: Product,
-    public productColor: string,
+    public productColor: Color,
     public createTime: string
   ) {}
 }
