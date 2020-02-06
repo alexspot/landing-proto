@@ -1,34 +1,52 @@
 <div class="container-fluid mt-5">
   <div class="row justify-content-center">
-    <div class="col-xl-6">
+    <div class="col-xl-2">
+      <button class="btn btn-link" (click)="onFetchOrdersClick()">
+        Fetch orders
+      </button>
+      <button class="btn btn-link" (click)="onStoreOrdersClick()">
+        Store orders
+      </button>
+    </div>
+  </div>
+  <div class="row justify-content-center">
+    <div class="col-xl-8">
       <table class="table table-sm">
         <thead>
           <tr>
+            <th>Time Created</th>
             <th>First Name</th>
             <th>Last Name</th>
             <th>City</th>
             <th>Phone number</th>
             <th>Nova Poshta</th>
+            <th>Status</th>
+            <th>Product</th>
+            <th>Product Color</th>
             <th>Action</th>
           </tr>
         </thead>
         <tbody>
           <tr
-            *ngFor="let order of (orderList | async).orderList; let i = index"
+            *ngFor="let order of orderList; let i = index"
             class="mt-5">
+            <td>{{order.createTime | date: 'dd-MM-yyyy H:mm'}}</td>
             <td>{{order.firstName}}</td>
             <td>{{order.lastName}}</td>
             <td>{{order.city}}</td>
             <td>{{order.phoneNumber}}</td>
             <td>{{order.npAffiliate}}</td>
+            <td>{{order.status}}</td>
+            <td>{{order.product.title}}</td>
+            <td>{{order.productColor}}</td>
             <td>
               <button 
                 class="btn btn-primary mr-2" 
                 (click)="onUpdateClick(i)" 
                 routerLink="/order/{{i}}/edit">Edit</button>
               <button 
-                class="btn btn-primary" 
-                >Delete</button>
+                (click)="onDeleteClick(i)"
+                class="btn btn-primary">Delete</button>
             </td>
           </tr>
         </tbody>

@@ -1,12 +1,12 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { DataStorageService } from '../data-storage.service';
 import { Store } from '@ngrx/store';
-import { Order } from '../order/order.model';
+import { Order } from '../orders/order.model';
 import { Observable } from 'rxjs';
 
 
-import * as orderActions from '../order/store/order.actions';
-import * as fromOrder from '../order/store/order.reducer';
+import * as orderActions from '../orders/store/order.actions';
+import * as fromOrder from '../orders/store/order.reducer';
 
 @Component({
   selector: 'app-admin',
