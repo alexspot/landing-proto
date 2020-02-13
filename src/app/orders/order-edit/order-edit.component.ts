@@ -52,6 +52,7 @@ export class OrderEditComponent implements OnInit, OnDestroy {
     });
 
     this.store.dispatch(new ProductActions.getProducts());
+    // this.store.dispatch(new OrderActions.getOrders());
     this.productSubscription = this.store.select('product').pipe(
       map(productState => {
         return productState.productList
@@ -64,8 +65,8 @@ export class OrderEditComponent implements OnInit, OnDestroy {
         return index == this.id;
       })
     })).subscribe(order => {
-      this.productColors = order.product.colors;
       this.product = order.product;
+      this.productColors = order.product.colors;
       this.orderForm.setValue({
         firstName: order.firstName,
         lastName: order.lastName,
@@ -79,6 +80,9 @@ export class OrderEditComponent implements OnInit, OnDestroy {
       this.editedItemCreatedTime = order.createTime;
     });
   }
+
+  // THERE IS A BUG (WHEN THERE IS ONLY 1 PRODUCT, ON SELECT METHOD IS NOT CALLED)
+  // NEED TO THINK HOW TO INITIALIZE this.selectedProduct???
 
   onSelect() {
     const selectedProductTitle = this.orderForm.value.productTitle;
@@ -94,7 +98,6 @@ export class OrderEditComponent implements OnInit, OnDestroy {
 
     this.productColors = this.selectedProduct.colors;
     console.log(this.productColors);
-    // #TODO fix this error by adding type (model) COLOR
     this.orderForm.patchValue({color: this.productColors[0].name});
   }
 
@@ -119,9 +122,17 @@ export class OrderEditComponent implements OnInit, OnDestroy {
     }
   }
 
-  ngOnDestroy(){
-    this.orderSubscription.unsubscribe();
-    this.productSubscription.unsubscribe();
-    this.productSelectSubscription.unsubscribe();
+  ngOnDestroy() {
+    if (this.productSelectSubscription != null) {
+      this.productSelectSubscription.unsubscribe();
+    }
+
+    if (this.orderSubscription != null) {
+      this.orderSubscription.unsubscribe();
+    }
+
+    if (this.productSubscription != null) {
+      this.productSubscription.unsubscribe();
+    }
   }
 }

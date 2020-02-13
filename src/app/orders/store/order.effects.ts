@@ -65,5 +65,13 @@ export class OrderEffects {
     })
   )
 
+  @Effect({dispatch: false})
+  updateOrderSuccess = this.actions$.pipe(
+    ofType(OrderActions.UPDATE_ORDER),
+    tap(() => {
+      this.router.navigate(['/order/all']);
+    })
+  )
+
   constructor(private actions$: Actions, private http: HttpClient, private router: Router, private store: Store<fromApp.AppState>) {}
 }
