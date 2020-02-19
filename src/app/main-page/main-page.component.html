@@ -1,16 +1,42 @@
 <body>
 
-  <div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
-  </div>
+  <div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center"></div>
 
-  <!-- <div class="text-center pb-3">
-    <h3 class="display-5">До конца акции осталось</h3>
-    <h2 class="display-3">
-      <countdown [config]="{ leftTime: 7430, format: 'h:mm:ss' }"></countdown>
-    </h2>
-  </div> -->
 
-  <div class="container">
+  <div class="container-fluid">
+    <div class="row justify-content-center">
+      <div class="col-xl-12">
+        <ngb-carousel *ngIf="images">
+          <ng-template ngbSlide>
+            <div class="picsum-img-wrapper">
+              <img [src]="images[0]" alt="Random first slide">
+            </div>
+            <div class="carousel-caption">
+              <h3>First slide label</h3>
+              <p>Nulla vitae elit libero, a pharetra augue mollis interdum.</p>
+            </div>
+          </ng-template>
+          <ng-template ngbSlide>
+            <div class="picsum-img-wrapper">
+              <img [src]="images[1]" alt="Random second slide">
+            </div>
+            <div class="carousel-caption">
+              <h3>Second slide label</h3>
+              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+            </div>
+          </ng-template>
+          <ng-template ngbSlide>
+            <div class="picsum-img-wrapper">
+              <img [src]="images[2]" alt="Random third slide">
+            </div>
+            <div class="carousel-caption">
+              <h3>Third slide label</h3>
+              <p>Praesent commodo cursus magna, vel scelerisque nisl consectetur.</p>
+            </div>
+          </ng-template>
+        </ngb-carousel>
+      </div>
+    </div>
     <div class="row justify-content-center">
       <div class="col-xl-4 ">
         <div 
@@ -18,7 +44,6 @@
         *ngFor="let product of productList; let i = index">
         <div
           class="card mb-4 box-shadow">
-          <!-- <img src="{{product.image}}" class="card-img-top" alt="image"> -->
           <div class="card-header">
             <h4 class="my-0 font-weight-normal">{{product.title}}</h4>
           </div>

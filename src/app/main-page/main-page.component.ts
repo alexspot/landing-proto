@@ -20,6 +20,11 @@ export class MainPageComponent implements OnInit, OnDestroy {
   productList: Product[];
   
   @Input() selectedProductColor: string;
+  images = [
+    'https://hydrotherapy.com.ua/images/shutterstock_6910224122.jpg.pagespeed.ce.KKlYOLl-RP.jpg',
+    'https://hydrotherapy.com.ua/images/xslider.jpg.pagespeed.ic.JqYrFMa8pB.webp',
+    'https://hydrotherapy.com.ua/images/xshutterstock_65678896.jpg.pagespeed.ic.BgP0tZGzZ7.webp'
+  ]
 
   constructor( private store: Store<fromApp.AppState>) { }
 

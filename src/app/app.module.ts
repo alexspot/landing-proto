@@ -11,6 +11,8 @@ import { ThankYouPageComponent } from './thank-you-page/thank-you-page.component
 import { MainPageComponent } from './main-page/main-page.component';
 import { CountdownModule } from 'ngx-countdown';
 import { HttpClientModule } from '@angular/common/http';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+
 
 
 import { StoreModule } from '@ngrx/store';
@@ -77,7 +79,8 @@ const appRoutes: Routes = [
     CountdownModule,
     StoreModule.forRoot(fromApp.appReducer),
     EffectsModule.forRoot([AuthEffects, OrderEffects, ProductEffects]),
-    HttpClientModule
+    HttpClientModule,
+    NgbModule
   ],
   providers: [
     DataStorageService,
