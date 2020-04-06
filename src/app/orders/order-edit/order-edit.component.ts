@@ -33,19 +33,20 @@ export class OrderEditComponent implements OnInit, OnDestroy {
   productList: Product[];
   selectedProduct: Product;
 
-  orderForm = new FormGroup({
-    firstName: new FormControl(''),
-    lastName: new FormControl(''),
-    phoneNumber: new FormControl(''),
-    city: new FormControl(''),
-    npAffiliate: new FormControl(''),
+  orderForm =   new FormGroup({
+    firstName:    new FormControl(''),
+    lastName:     new FormControl(''),
+    phoneNumber:  new FormControl(''),
+    city:         new FormControl(''),
+    npAffiliate:  new FormControl(''),
     productTitle: new FormControl(''),
-    color: new FormControl('')
+    color:        new FormControl('')
   })
 
   constructor(private store: Store<fromApp.AppState>, private router: Router, private route: ActivatedRoute ) { }
 
   ngOnInit() {
+   
     this.route.params.subscribe((params: Params) => {
       this.id = +params['id'];
       this.editMode = params['id'] != null;
@@ -65,6 +66,7 @@ export class OrderEditComponent implements OnInit, OnDestroy {
         return index == this.id;
       })
     })).subscribe(order => {
+
       this.product = order.product;
       this.productColors = order.product.colors;
       this.orderForm.setValue({
@@ -76,8 +78,10 @@ export class OrderEditComponent implements OnInit, OnDestroy {
         productTitle: order.product.title,
         color: order.productColor
       })
+      
       // save created time in separate var. Maybe there is more elegant way of doing so
       this.editedItemCreatedTime = order.createTime;
+
     });
   }
 
@@ -104,6 +108,23 @@ export class OrderEditComponent implements OnInit, OnDestroy {
   onSubmit() {
     const value = this.orderForm.value;
 
+    //NOT VERY ELEGANT SOLUTION TO GET SELECTED PRODUCT. MAYBE THIS SHOULD BE MOVED
+    //TO SEPARATE METHOD BECAUSE EVEN NOW IT IS USED TWICE IN THIS COMPONENT.
+    //
+    //DO NOT HAVE A BETTER IDEA HOW TO GET SELECTED PRODUCT ATM
+    const selectedProductTitle = value.productTitle;
+
+    this.productSelectSubscription = this.store.select('product').pipe(
+      map((productState) => {
+        return productState.productList.find((product, index) => {
+          return product.title == selectedProductTitle;
+        })
+      })).subscribe(product => {
+        this.selectedProduct = product;
+      })
+      
+    // NOT ELEGANT SOLUTION ENDS HERE  
+
     const newOrder = new Order(
       value.firstName,
       value.lastName,
@@ -115,7 +136,8 @@ export class OrderEditComponent implements OnInit, OnDestroy {
       value.color,
       this.editedItemCreatedTime
     )
-
+    console.log('edit mode is' + this.editMode);  
+    console.log(newOrder);
     if (this.editMode) {
       this.store.dispatch(new OrderActions.updateOrder({index: this.id, order: newOrder}));
       this.store.dispatch(new OrderActions.storeOrders());
